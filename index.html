@@ -3,6 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>test</title>
+    <style>
+
+        .popin{
+            background:#fff;
+            padding:15px;
+            box-shadow: 0 0 20px #999;
+            border-radius:2px;
+        }
+
+
+
+        #map
+        {
+            height:500px;
+            background:#6699cc;
+        }
+
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
     <script src="gmaps.js"></script>
@@ -19,21 +37,48 @@
             GMaps.geolocate({
                 success: function(position){
                     map.setCenter(position.coords.latitude, position.coords.longitude);
+                    var $marker =map.addMarker({
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                        title: '你的位置',
+                        infoWindow: {
+                            content: '<p>你的位置</p>'
+                        }
+                    });
+                    $marker.infoWindow.open($map, $marker);
                 },
                 error: function(error){
-                    alert('Geolocation failed: '+error.message);
+                    alert('你的手機沒有GPS,或者你按了拒絕存取座標: '+error.message);
+                    //alert('你的手機沒有GPS,或者你按了拒絕存取座標: '+error.message);
                 },
                 not_supported: function(){
-                    alert("Your browser does not support geolocation");
+                    alert("你der手機沒有GPS");
                 },
                 always: function(){
-                    alert("Done!");
+                   // alert("完成!");
+
                 }
             });
+            /*Map*/
+
+
+
         });
     </script>
 </head>
 <body>
-<div id="map"></div>
+
+<div id="body">
+    <h3>地圖 GPS Demo</h3>
+
+            <div class="popin">
+                <div id="map"></div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
 </body>
 </html>
